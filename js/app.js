@@ -23,6 +23,7 @@ const startTween = function () {
     let icon = document.querySelector('figure')
     let fromCol = document.querySelector('.from-col')
     let toCol = document.querySelector('.to-col')
+    let d = 1
     let iconTween = TweenLite.to(
         icon, // element
         2, // time seconds
@@ -32,27 +33,28 @@ const startTween = function () {
             opacity: 1,
             scale: .33,
             onComplete: revertTween, // callback on complete
-            onCompleteParams: [icon, fromCol, toCol] // params to be sent to callback
+            onCompleteParams: [icon, fromCol, toCol, d] // params to be sent to callback
         } // object of properties
     )
     let columnTextTween = TweenLite.to(
         toCol.children[0],
         2,
         {
+            delay: d - .25,
             color: '#ff0080',
             fontSize: '5rem',
-            onComplete: revertTween,
-            onCompleteParams: ['{self}']
+            onComplete: revertTween
         }
     )
 }
 
-const revertTween = function (tween, fromCol, toCol) {
+const revertTween = function (tween, fromCol, toCol, d) {
     if (tween) {
         let iconRevert = TweenLite.to(
             tween,
             2,
             {
+                delay: d,
                 x: fromCol.offsetLeft,
                 rotation: -540,
                 opacity: .33,
